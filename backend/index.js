@@ -139,6 +139,12 @@ app.get("/getCompleteStudentDetails/:studentID",teacherController.getCompleteStu
 app.get("/getStudentsForCC",auth.authorizeTeacher,teacherController.getStudentsForCC);
 app.put("/updateFinalTicketStatus/:studentID",auth.authorizeTeacher,teacherController.updateFinalTicketStatus);
 
+app.get(
+  "/getSubjectSpecificDetails/:studentID",
+  auth.authorizeTeacher,
+  teacherController.getSubjectSpecificDetails
+);
+
 app.listen(port, () => {
     console.log(
         `Node Server Running on Port ${process.env.PORT || 8080}`
