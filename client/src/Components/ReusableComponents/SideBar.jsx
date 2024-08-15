@@ -73,17 +73,18 @@ const SideBar = () => {
         }else if(User.user_type === "teacher"){
             setUsername(User.fname);
             setMenus([
-                { title: "Dashboard", src: Chart_fill },
-                { title: "Profile", src: Profile }, // Corrected src reference
-                { title: "My Divisons", src: List, gap: true},
-                { title: "My Batches", src: List, gap: true},
-                { title: "Upload Marks and Attendence", src: Add, gap: true},
-                { title: "Assingments", src: Folder ,gap:true ,readOnly:true },
-                { title: "Create for Division", src: Add,gap:true  },
-                { title: "Create for Batch", src: Add ,gap:true  },
-                { title: "Assignment List", src: List, gap: true},
-                { title: "Mentorship Groups", src: Faculty, gap: true},
-                { title: "TeacherChats", src: Chat, gap: true},
+              { title: "Dashboard", src: Chart_fill },
+              { title: "Profile", src: Profile }, // Corrected src reference
+              { title: "My Divisons", src: List, gap: true },
+              { title: "CC Divison", src: List, gap: true },
+              { title: "My Batches", src: List, gap: true },
+              { title: "Upload Marks and Attendence", src: Add, gap: true },
+              { title: "Assingments", src: Folder, gap: true, readOnly: true },
+              { title: "Create for Division", src: Add, gap: true },
+              { title: "Create for Batch", src: Add, gap: true },
+              { title: "Assignment List", src: List, gap: true },
+              { title: "Mentorship Groups", src: Faculty, gap: true },
+              { title: "TeacherChats", src: Chat, gap: true },
             ]);
         }else{
             setUsername(User.fname);

@@ -45,6 +45,18 @@ async function FetchStudentData() {
   }
 }
 
+async function FetchCCDivisionData() {
+  const url = "/getStudentsForCC";
+  try {
+    const { data } = await axios.get(url);
+    // console.log("division :" , data);
+    return data;
+  } catch (error) {
+    console.error("Not getting data", error);
+    toast.error("Not getting data");
+  }
+}
+
 async function FetchDivisionData() {
   const url = "/getdivision";
   try {
@@ -199,11 +211,12 @@ async function FetchStudentDataByBatch(batchID) {
 async function FetchStudentDataById(studentID) {
   //yecha route aahe ka nhi mahit nahi backend la
   const url = `/getCompleteStudentDetails/${studentID}`;
-  console.log("hellllll");
+  console.log("helo");
   console.log(studentID, url);
   try {
+    console.log("Fetching the data")
     const { data } = await axios.get(url);
-    console.log(data);
+    console.log("Received data",data);
     return data;
   } catch (error) {
     console.error("Not getting data", error);
@@ -293,4 +306,5 @@ export {
   FetchStudentDataById,
   Approve,
   FetchSpecificStudentDataById,
+  FetchCCDivisionData,
 };

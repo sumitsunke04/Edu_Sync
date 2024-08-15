@@ -21,7 +21,7 @@ import {
   FetchStudentDataById,
 } from "../ReusableComponents/Data";
 
-const TanStackTable = ({ USERS, type }) => {
+const FinalApprovalTable = ({ USERS, type }) => {
   const columnHelper = createColumnHelper();
   // console.log("type : ", USERS)
   const [data, setData] = useState([]);
@@ -791,6 +791,15 @@ const TanStackTable = ({ USERS, type }) => {
         </tbody>
       </table>
 
+      {data.some((obj) => obj.hasOwnProperty("subname")) && (
+        <button className="approve-btn w-30 mt-4 mb-4"
+          onClick={approveFinalTicket(data)}
+        >
+          <img className=" h-6" />
+          Approve Ticket
+        </button>
+      )}
+
       {/* pagination */}
       <div className="flex items-center justify-end mt-2 gap-3">
         <button
@@ -856,4 +865,4 @@ const TanStackTable = ({ USERS, type }) => {
   );
 };
 
-export default TanStackTable;
+export default FinalApprovalTable;

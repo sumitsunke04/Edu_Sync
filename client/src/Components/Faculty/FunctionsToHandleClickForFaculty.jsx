@@ -7,6 +7,8 @@ const handlefacultyClick = ({ Menu, navigate }) => {
       navigate("/faculty/dashboard");
     } else if (Menu.title === "My Divisons") {
       navigate("/faculty/divisions");
+    } else if (Menu.title === "CC Divison") {
+      navigate("/faculty/ccdivision");
     } else if (Menu.title === "My Batches") {
       navigate("/faculty/batches");
     }
