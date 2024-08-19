@@ -15,6 +15,10 @@ const Batch = require("../models/batch");
 const StudentPracticalInfo = require("../models/studentpracticalinfo");
 const StudentSubjectInfo = require("../models/studentsubjectinfo");
 const { ObjectId } = require("mongodb");
+const nodemailer = require('nodemailer');
+const moment = require('moment');
+const PDFDocument = require('pdfkit');
+const path = require('path'); 
 
 // --------------------------------------------Controller for assigning marks to student-------------------------------------------
 // Note : hearders of Excel sheet  rollno | subname1 | subname2 | subname3  (write rollno as it is and subname in uppercase)
@@ -581,6 +585,10 @@ exports.updateFinalTicketStatus = async (req, res) => {
     console.log("original ", student);
     student.ccapproved = !student.ccapproved;
     await student.save();
+    if (student.ccapproved === true){
+      await sendEmailToStudent(studentID)
+    }
+    
     console.log("after  ", student);
 
     return res.status(200).json(student);
@@ -648,4 +656,83 @@ exports.getSubjectSpecificDetails = async (req, res) => {
   } catch (err) {
     return res.status(200).json({ message: err.message });
   }
+};
+
+const sendEmailToStudent = async (studentID) => {
+  const student = await Student.findOne({ _id: studentID });
+  // Create a transporter using Brevo SMTP details
+  let transporter = nodemailer.createTransport({
+      host: 'smtp-relay.brevo.com',  // Brevo's SMTP server
+      port: 587,                     // Port number (587 for STARTTLS)
+      secure: false,                 // Use TLS
+      auth: {
+          user: '7a386f001@smtp-brevo.com',  // Your Brevo SMTP login
+          pass: process.env.BREVO_KEY       // Your Brevo SMTP master password
+      },
+  });
+
+  const emailBody = `Congratulations ${student.fname}! Your Submission ticket has been approved successfully`
+  const outputPath = `./reports/${studentID}-${moment().format('YYYY-MM-DD')}.pdf`;
+
+  let mailOptions = {
+      from: 'sumitcodechef@gmail.com',   // Your email address
+      to: student.email,                // Recipient email address
+      subject: 'Update on Submission ticket approval',
+      text: emailBody,
+      attachments: [
+          {
+              filename: path.basename(outputPath),
+              path: outputPath
+          }
+      ]
+  };
+
+  console.log("Sending an email ------------------------------------------")
+  // const outputPath = `./reports/${studentID}-${moment().format('YYYY-MM-DD')}.pdf`
+  try {
+      await generatePDF(studentID,outputPath)
+      let info = await transporter.sendMail(mailOptions);
+  } catch (error) {
+      console.error('Error sending email:', error);
+  }
+};
+
+const generatePDF = async (studentID,outputPath) => {
+  const subjects = await StudentSubjectInfo.find({ std_id: studentID });
+  const practicals = await StudentPracticalInfo.find({ std_id: studentID });
+  const student = await Student.findOne({ _id : studentID})
+  console.log("filtered student :", student)
+
+  const doc = new PDFDocument();
+  doc.pipe(fs.createWriteStream(outputPath));
+
+  doc.fontSize(16).text(`Submission ticket for ${student.fname}`, {
+      align: 'center'
+  });
+  doc.moveDown();
+
+  doc.fontSize(12).text('Subject               |       Attendance    |    Status ');
+  doc.text('-------------------------------------------------------------------');
+  subjects.forEach(subject => {
+    const subname = subject.subname.padEnd(20- subject.subname.length);
+    const attendance = subject.attendance ? subject.attendance : 0;
+    const status = subject.sub_ticket_approval ? 'Approved' : 'Not Approved';
+
+    // Add subject information to the PDF
+    doc.text(`${subname}       |       ${attendance}%    |    ${status}`);
+});
+
+practicals.forEach(subject => {
+  const subname = subject.pracsubname.padEnd(20- subject.pracsubname.length);
+  const attendance = subject.attendance ? subject.attendance : 0;
+  const status = subject.sub_ticket_approval ? 'Approved' : 'Not Approved';
+
+  // Add subject information to the PDF
+  doc.text(`${subname}       |       ${attendance}%    |    ${status}`);
+});
+
+doc.moveDown()
+doc.text(`Final Approval Status : Approved`)
+
+  doc.end();
 };
