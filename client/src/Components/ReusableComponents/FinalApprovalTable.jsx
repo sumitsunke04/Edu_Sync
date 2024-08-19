@@ -19,6 +19,7 @@ import {
   FetchStudentDataByDivision,
   FetchSpecificStudentDataById,
   FetchStudentDataById,
+  updateFinalTicketStatus,
 } from "../ReusableComponents/Data";
 
 const FinalApprovalTable = ({ USERS, type }) => {
@@ -26,6 +27,8 @@ const FinalApprovalTable = ({ USERS, type }) => {
   // console.log("type : ", USERS)
   const [data, setData] = useState([]);
   const [typefor, setTypefor] = useState(type);
+  const [studentAllInfo, setStudentAllInfo] = useState(null);
+  const [finalApprovalStatus, setFinalApprovalStatus] = useState(null);
 
   const redirectToLink = (link) => {
     window.open(link, "_blank");
@@ -56,6 +59,8 @@ const FinalApprovalTable = ({ USERS, type }) => {
   };
   const handleStudentTotalInfo = async (studId) => {
     const data = await FetchStudentDataById(studId);
+    setStudentAllInfo(data)
+    setFinalApprovalStatus(data.ccapproved);
     data.practicals.forEach((obj) => {
       if (obj.pracsubname !== undefined) {
         obj.subname = obj.pracsubname; // Add new key `subname` with the value of `pracsubname`
@@ -74,6 +79,12 @@ const FinalApprovalTable = ({ USERS, type }) => {
     // window.location.reload();
     console.log(USERS);
   };
+
+  const handleFinalApproval = async(data) =>{
+    console.log("handling final approval")
+    setFinalApprovalStatus(!finalApprovalStatus)
+    const res = await updateFinalTicketStatus(data.id)
+  }
 
   //   useEffect(() => {
   //     setData([data]); // Update data whenever USERS changes
@@ -792,11 +803,15 @@ const FinalApprovalTable = ({ USERS, type }) => {
       </table>
 
       {data.some((obj) => obj.hasOwnProperty("subname")) && (
-        <button className="approve-btn w-30 mt-4 mb-4"
-          onClick={approveFinalTicket(data)}
+        <button className= {`approve-btn w-30 mt-4 mb-4 ${
+          finalApprovalStatus === true
+            ? "bg-green-500 text-white"
+            : "bg-red-500 text-white"
+        }`}
+          onClick={()=>{handleFinalApproval(studentAllInfo)}}
         >
           <img className=" h-6" />
-          Approve Ticket
+          {finalApprovalStatus === true ? "Approved" : "Approve Ticket"}
         </button>
       )}
 

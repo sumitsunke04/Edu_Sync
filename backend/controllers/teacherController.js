@@ -579,7 +579,7 @@ exports.updateFinalTicketStatus = async (req, res) => {
         .json({ message: "Not allowed to edit (not CC of this student)" });
     }
     console.log("original ", student);
-    student.ccapproved = newStatus;
+    student.ccapproved = !student.ccapproved;
     await student.save();
     console.log("after  ", student);
 
@@ -602,6 +602,7 @@ exports.getCompleteStudentDetails = async (req, res) => {
     studentObj.roll = student.roll;
     studentObj.attendance = student.attendance;
     studentObj.ccapproved = student.ccapproved;
+    studentObj.id = student._id
 
     const subjects = await StudentSubjectInfo.find({ std_id: studentID });
     const practicals = await StudentPracticalInfo.find({ std_id: studentID });

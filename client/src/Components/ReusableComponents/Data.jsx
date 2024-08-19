@@ -283,6 +283,14 @@ async function Approve(studentId,sub, forLab, newStatus) {
   }
 }
 
+async function updateFinalTicketStatus(studentId) {
+  const url = `/updateFinalTicketStatus/${studentId}`;
+  const {response} = await axios.put(url)
+  console.log(response)
+  
+}
+
+
 export {
   FetchPracticalData,
   FetchSubjectData,
@@ -307,4 +315,5 @@ export {
   Approve,
   FetchSpecificStudentDataById,
   FetchCCDivisionData,
+  updateFinalTicketStatus,
 };
