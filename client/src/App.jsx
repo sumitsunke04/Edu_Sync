@@ -50,7 +50,7 @@ import TeacherChats from "./Components/Faculty/Chats";
 import AssignmentPosted from "./Components/Faculty/AssignmentPosted";
 
 function App() {
-    axios.defaults.baseURL = "http://localhost:8080";
+    axios.defaults.baseURL = "https://edu-sync.onrender.com";
     axios.defaults.withCredentials = true;
 
     const { User } = useCon();
