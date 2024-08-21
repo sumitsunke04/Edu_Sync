@@ -650,7 +650,7 @@ exports.getSubjectSpecificDetails = async (req, res) => {
       teacher_id: teacherID,
     }); 
 
-    studentObj.subjects = studentAndSubjectInfo; 
+    studentObj.subjects = studentAndSubjectInfo;  
 
     return res.status(200).json(studentObj);
   } catch (err) {
@@ -658,6 +658,24 @@ exports.getSubjectSpecificDetails = async (req, res) => {
   }
 };
 
+exports.getPracticalSpecificDetails = async (req, res) => {
+  try {
+    const teacherID = req.teacher.teacher_id;
+    const { studentID } = req.params;
+    const studentObj = {};
+    console.log(studentID, teacherID);
+    const studentAndSubjectInfo = await StudentPracticalInfo.find({
+      std_id: studentID,
+      teacher_id: teacherID,
+    }); 
+
+    studentObj.practicals = studentAndSubjectInfo;  
+
+    return res.status(200).json(studentObj);
+  } catch (err) {
+    return res.status(200).json({ message: err.message });
+  }
+};
 const sendEmailToStudent = async (studentID) => {
   const student = await Student.findOne({ _id: studentID });
   // Create a transporter using Brevo SMTP details

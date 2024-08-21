@@ -145,6 +145,12 @@ app.get(
   teacherController.getSubjectSpecificDetails
 );
 
+
+app.get(
+  "/getPracticalSpecificDetails/:studentID",
+  auth.authorizeTeacher,
+  teacherController.getPracticalSpecificDetails
+);
 app.listen(port, () => {
     console.log(
         `Node Server Running on Port ${process.env.PORT || 8080}`
