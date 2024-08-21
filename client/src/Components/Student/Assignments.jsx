@@ -99,7 +99,7 @@ const Assignments = () => {
               </tr>
             </thead>
             <tbody>
-              {assignments.map((assignment) => (
+              {assignments?.map((assignment) => (
                 <tr key={assignment._id}>
                   <td className="border px-4 py-2">
                     {assignment.problemstatement}
