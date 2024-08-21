@@ -34,7 +34,7 @@ const app = express();
 const clientUrl = process.env.CLIENT_URL;
 app.use(cors({
     credentials: true,
-    origin: clientUrl,
+    origin: [clientUrl,"https://verdant-maamoul-948e3e.netlify.app"],
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these methods
 }));
 app.use(express.json());
