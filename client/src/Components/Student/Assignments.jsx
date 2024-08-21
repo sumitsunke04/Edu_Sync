@@ -9,11 +9,13 @@ import axios from "axios";
 import { storage } from "../ReusableComponents/firebase";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const Assignments = () => {
   const [CompletedAssignments, setCompletedAssignments] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const [progresspercent, setProgresspercent] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +60,8 @@ const Assignments = () => {
         });
       }
     );
+
+    navigate("/student/assignments")
   };
 
   const updateAssignment = async (assignmentId, uploadedDocLink) => {
