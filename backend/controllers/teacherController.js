@@ -666,7 +666,7 @@ const sendEmailToStudent = async (studentID) => {
       port: 587,                     // Port number (587 for STARTTLS)
       secure: false,                 // Use TLS
       auth: {
-          user: '7a386f001@smtp-brevo.com',  // Your Brevo SMTP login
+          user: '7ab380001@smtp-brevo.com',  // Your Brevo SMTP login
           pass: process.env.BREVO_KEY       // Your Brevo SMTP master password
       },
   });
