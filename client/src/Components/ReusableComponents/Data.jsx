@@ -285,7 +285,7 @@ async function Approve(studentId,sub, forLab, newStatus) {
 
 async function updateFinalTicketStatus(studentId) {
   const url = `/updateFinalTicketStatus/${studentId}`;
-  const {response} = await axios.put(url)
+  const {response} = await axios.post(url)
   console.log(response)
   
 }
