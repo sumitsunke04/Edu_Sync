@@ -19,11 +19,11 @@ import {
   FetchStudentDataByDivision,
   FetchSpecificStudentDataById,
   FetchStudentDataById,
+  FetchSpecificStudentDataForPracticalById
 } from "../ReusableComponents/Data";
 
 const TanStackTable = ({ USERS, type }) => {
-  const columnHelper = createColumnHelper();
-  // console.log("type : ", USERS)
+  const columnHelper = createColumnHelper(); 
   const [data, setData] = useState([]);
   const [typefor, setTypefor] = useState(type);
 
@@ -33,7 +33,6 @@ const TanStackTable = ({ USERS, type }) => {
 
   const handleDivisionList = async (divID) => {
     const data = await FetchStudentDataByDivision(divID);
-
     setData(data);
     setTypefor("studentinfacultydiv");
   };
@@ -49,8 +48,9 @@ const TanStackTable = ({ USERS, type }) => {
     setTypefor("studentTotalInfoSub");
   };
   const handleStudentInfolistPractical = async (studId) => {
-    const data = await FetchSpecificStudentDataById(studId);
-    console.log("LIst" + data);
+    const data = await FetchSpecificStudentDataForPracticalById(studId);
+    console.log("hiiiiiiiiiiiiiiiii");
+    console.log(data);
     setData(data.practicals);
     setTypefor("studentTotalInfoPrac");
   };
@@ -591,7 +591,7 @@ const TanStackTable = ({ USERS, type }) => {
           columnHelper.accessor("marks", {
             cell: (info) => (
               <span className="flex gap-2">
-                {info.row.original.marks.map((value, index) => (
+                {info.row.original.marks?.map((value, index) => (
                   <React.Fragment key={index}>
                     <div>{value.test_type}</div>
                     <p>:</p>

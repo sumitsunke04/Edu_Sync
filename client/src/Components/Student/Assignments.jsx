@@ -15,21 +15,21 @@ const Assignments = () => {
   const [assignments, setAssignments] = useState([]);
   const [progresspercent, setProgresspercent] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await FetchCompletedAssignments();
-        const data2 = await FetchIncompletedAssignments();
-        if (data) {
-          setCompletedAssignments(data);
-        }
-        if (data2) {
-          setAssignments(data2);
-        }
-      } catch (error) {
-        console.error("Error fetching student data:", error);
+  const fetchData = async () => {
+    try {
+      const data = await FetchCompletedAssignments();
+      const data2 = await FetchIncompletedAssignments();
+      if (data) {
+        setCompletedAssignments(data);
       }
-    };
+      if (data2) {
+        setAssignments(data2);
+      }
+    } catch (error) {
+      console.error("Error fetching student data:", error);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -68,6 +68,8 @@ const Assignments = () => {
         isCompleted: true,
       });
       toast.success("Assignment submited");
+      // window.location.reload();
+      fetchData();
       setAssignments(null);
     } catch (error) {
       console.error("Error updating assignment:", error);
@@ -95,7 +97,7 @@ const Assignments = () => {
               </tr>
             </thead>
             <tbody>
-              {assignments.map((assignment) => (
+              {assignments?.map((assignment) => (
                 <tr key={assignment._id}>
                   <td className="border px-4 py-2">
                     {assignment.problemstatement}

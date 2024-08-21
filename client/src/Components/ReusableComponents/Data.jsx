@@ -231,7 +231,6 @@ async function FetchSpecificStudentDataById(studentID) {
   console.log(studentID, url);
   try {
     const { data } = await axios.get(url);
-    console.log("helooooo")
     console.log(data);
     return data;
   } catch (error) {
@@ -239,6 +238,24 @@ async function FetchSpecificStudentDataById(studentID) {
     toast.error("Not getting data");
   }
 }
+
+
+async function FetchSpecificStudentDataForPracticalById(studentID) {
+  //yecha route aahe ka nhi mahit nahi backend la
+  const url = `/getPracticalSpecificDetails/${studentID}`;
+  
+  console.log(studentID, url);
+  try {
+    const { data } = await axios.get(url);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Not getting data", error);
+    toast.error("Not getting data");
+  }
+}
+
+
 async function FetchMentorGroupByTeacher() {
   //yecha route aahe ka nhi mahit nahi backend la
   const url = `/getgrpbyteacher`;
@@ -316,4 +333,5 @@ export {
   FetchSpecificStudentDataById,
   FetchCCDivisionData,
   updateFinalTicketStatus,
+  FetchSpecificStudentDataForPracticalById,
 };
