@@ -111,7 +111,7 @@ app.get('/teachers/:teacherID', teacherController.getTeacherByID);
 app.post('/addSubject', auth.authorizeAdmin, adminController.addSubject);
 app.post('/addPractical', auth.authorizeAdmin, adminController.addPractical);
 
-app.put('/updateAssignment', auth.authorizeStudent, studentController.updateAssignment);
+app.post('/updateAssignment', auth.authorizeStudent, studentController.updateAssignment);
 
 app.get('/student/myChats', auth.authorizeStudent, studentController.myChats);
 app.get('/teacher/myChats', auth.authorizeTeacher, teacherController.myChats);
@@ -137,7 +137,7 @@ app.get("/teacher/myChats", auth.authorizeTeacher, teacherController.myChats);
 app.post("/updateTicketStatus",auth.authorizeTeacher,teacherController.updateTicketStatus);
 app.get("/getCompleteStudentDetails/:studentID",teacherController.getCompleteStudentDetails);
 app.get("/getStudentsForCC",auth.authorizeTeacher,teacherController.getStudentsForCC);
-app.put("/updateFinalTicketStatus/:studentID",auth.authorizeTeacher,teacherController.updateFinalTicketStatus);
+app.post("/updateFinalTicketStatus/:studentID",auth.authorizeTeacher,teacherController.updateFinalTicketStatus);
 
 app.get(
   "/getSubjectSpecificDetails/:studentID",

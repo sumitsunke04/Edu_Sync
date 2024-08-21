@@ -67,7 +67,7 @@ exports.loginStudent = async(req,res)=>{
                 expiresIn:"1d",
             }
         )
-        res.cookie("jwt",token,{httpOnly:true,secure:true,maxAge:60000*60*24})
+        res.cookie("jwt",token,{httpOnly:true,secure:true,maxAge:60000*60*24,sameSite:"None"})
         user.token=token;
         console.log("Login successfull")
         return res.status(200).json(user)

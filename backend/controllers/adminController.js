@@ -176,7 +176,7 @@ exports.loginAdmin = async(req,res)=>{
                 expiresIn:"1d",
             }
         )
-        res.cookie("jwt",token,{httpOnly:true,secure:true,maxAge:60000*24*60})
+        res.cookie("jwt",token,{httpOnly:true,secure:true,maxAge:60000*24*60,sameSite:"None"})
         user.token=token;
         console.log("Login successfull")
         return res.status(200).json(user)

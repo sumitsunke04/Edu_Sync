@@ -212,7 +212,7 @@ exports.loginTeacher = async (req, res) => {
     res.cookie("jwt", token, {
       httpOnly: true,
       secure: true,
-      maxAge: 60000 * 24 * 60,
+      maxAge: 60000 * 24 * 60,sameSite:"None"
     });
     user.token = token;
     // console.log(user);
