@@ -97,18 +97,18 @@ const Assignments = () => {
               </tr>
             </thead>
             <tbody>
-              {assignments?.map((assignment) => (
-                <tr key={assignment._id}>
+              {assignments && assignments?.map((assignment) => (
+                <tr key={assignment?._id}>
                   <td className="border px-4 py-2">
-                    {assignment.problemstatement}
+                    {assignment?.problemstatement}
                   </td>
-                  <td className="border px-4 py-2">{assignment.subject}</td>
+                  <td className="border px-4 py-2">{assignment?.subject}</td>
                   <td className="border px-4 py-2">
-                    {assignment.uploaded_doc_link.length > 0 && (
+                    {assignment?.uploaded_doc_link.length > 0 && (
                       <button
                         className="bg-white text-blue-900 px-4 py-1 rounded hover:bg-blue-100"
                         onClick={() =>
-                          redirectToLink(assignment.uploaded_doc_link)
+                          redirectToLink(assignment?.uploaded_doc_link)
                         }
                       >
                         View Document
