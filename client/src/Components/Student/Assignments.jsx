@@ -62,7 +62,7 @@ const Assignments = () => {
 
   const updateAssignment = async (assignmentId, uploadedDocLink) => {
     try {
-      await axios.put("/updateAssignment", {
+      await axios.post("/updateAssignment", {
         assignmentID: assignmentId,
         uploadLink: uploadedDocLink,
         isCompleted: true,
